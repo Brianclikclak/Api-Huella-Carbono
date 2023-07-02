@@ -1,60 +1,50 @@
-
-
-const APIKEY = "VW01MSGNTGMK8DHC65YMXPDWRBR0";
-const ApiUrl = "https://beta4.api.climatiq.io";
-const url =  "https://beta4.api.climatiq.io/travel/flights";
-
-const config = {
-    headers:{
-        'Authorization': `Bearer ${APIKEY}`,
-        'Content-Type': 'application/json'
-    } 
-}
-
-const data = {
-    "legs": [
-      {
-        "from": "BER",
-        "to": "AMS",
-        "passengers": 2,
-        "class": "first"
-      },
-      {
-        "from": "AMS",
-        "to": "JFK",
-        "passengers": 2,
-        "class": "economy"
-      }
-    ]
-  };
-
-  axios.post(url, data, config)
-  .then(response => {
-    const result = response.data;
-    console.log(result);
-
-    // Actualizar el elemento 'co2e' con el valor de CO2e
-    const co2eElement = document.getElementById('co2e');
-    co2eElement.textContent = `CO2e: ${result.co2e} ${result.co2e_unit}`;
-
-    // Actualizar el elemento 'legs' con los detalles de los viajes
-    const legsElement = document.getElementById('legs');
-    legsElement.innerHTML = '';
-
-    result.legs.forEach((leg, index) => {
-        const activity_value = leg.activity_data.activity_value;
-        const activity_unit = leg.activity_data.activity_unit;
-
-        const legElement = document.createElement("div");
-        legElement.innerHTML = `<h3>Leg ${index + 1}</h3>
-        <p>Activity: ${activity_value}, ${activity_unit}</p>`;
-
-        legsElement.appendChild(legElement);
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('carbonForm');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+  
+      const origin = document.getElementById('origin').value;
+      const destination = document.getElementById('destination').value;
+      const passengers = parseInt(document.getElementById('passengers').value);
+      const travelClass = document.getElementById('class').value;
+  
+      const API_KEY = 'VW01MSGNTGMK8DHC65YMXPDWRBR0';
+  
+      const apiUrl = 'https://beta4.api.climatiq.io/travel/flights';
+  
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      };
+  
+      const data = {
+        "legs": [
+          {
+            "from": origin,
+            "to": destination,
+            "passengers": passengers,
+            "class": travelClass
+          }
+        ]
+      };
+  
+      axios.post(apiUrl, data, config)
+        .then(response => {
+          const result = response.data;
+  
+          const resultElement = document.getElementById('result');
+          resultElement.textContent = `CO2e: ${result.co2e} ${result.co2e_unit}`;
+          resultElement.style.display = 'block';
+        })
+        .catch(error => {
+          console.error('No se pudo obtener la solicitud:', error);
+        });
     });
-  })
-  .catch(error => {
-    console.error('No se pudo obtener la solicitud:', error);
   });
+ 
+  
 
 
 

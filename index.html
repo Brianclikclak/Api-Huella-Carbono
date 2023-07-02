@@ -8,8 +8,31 @@
 </head>
 <body>
 
-    <div id="co2e"></div>
-    <div id="legs"></div>
+    <form id="carbonForm">
+        <label for="origin">Origen:</label>
+        <select id="origin" name="origin">
+          <option value="BER" selected>Berlín</option>
+        </select>
+      
+        <label for="destination">Destino:</label>
+        <select id="destination" name="destination">
+          <option value="AMS">Ámsterdam</option>
+        </select>
+      
+        <label for="passengers">Pasajeros:</label>
+        <input type="number" id="passengers" name="passengers" min="1" value="1">
+      
+        <label for="class">Clase:</label>
+        <select id="class" name="class">
+          <option value="first">Primera Clase</option>
+          <option value="economy" selected>Clase Turista</option>
+        </select>
+      
+        <button type="submit">Calcular</button>
+      </form>
+      
+      <div id="result"></div>
+      
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js" type="module"></script>
