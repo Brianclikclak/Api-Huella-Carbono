@@ -1,5 +1,3 @@
-
-
 const APIKEY = "VW01MSGNTGMK8DHC65YMXPDWRBR0";
 const ApiUrl = "https://beta4.api.climatiq.io";
 const url =  "https://beta4.api.climatiq.io/travel/flights";
@@ -55,6 +53,10 @@ const data = {
   .catch(error => {
     console.error('No se pudo obtener la solicitud:', error);
   });
+
+
+ 
+  
 
 
 
